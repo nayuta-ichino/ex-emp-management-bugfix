@@ -26,6 +26,8 @@ import jp.co.sample.emp_management.service.AdministratorService;
 @Controller
 @RequestMapping("/")
 public class AdministratorController {
+	
+	
 
 	@Autowired
 	private AdministratorService administratorService;
@@ -75,6 +77,7 @@ public class AdministratorController {
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result,
 			RedirectAttributes redirectAttributes, Model model) {
+    
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
@@ -97,6 +100,7 @@ public class AdministratorController {
 			administratorService.insert(administrator);
 			return "redirect:/redirect-insert";
 		}
+
 
 	}
 
