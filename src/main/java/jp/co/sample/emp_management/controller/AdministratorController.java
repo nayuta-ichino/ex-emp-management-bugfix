@@ -84,8 +84,6 @@ public class AdministratorController {
 
 		// パスワードと確認用パスワードと一致していなければ入力画面に遷移
 		if (!(form.getPassword().equals(form.getPasswordCheck()))) {
-			System.out.println("初期用パスワード：" + form.getPassword());
-			System.out.println("確認用パスワード：" + form.getPasswordCheck());
 			return toInsert();
 		} else {
 			Administrator administrator = new Administrator();
