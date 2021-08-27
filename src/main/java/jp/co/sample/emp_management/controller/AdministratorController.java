@@ -26,8 +26,6 @@ import jp.co.sample.emp_management.service.AdministratorService;
 @Controller
 @RequestMapping("/")
 public class AdministratorController {
-	
-	
 
 	@Autowired
 	private AdministratorService administratorService;
@@ -75,33 +73,29 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/insert")
-	public String insert(@Validated InsertAdministratorForm form, BindingResult result,
-			RedirectAttributes redirectAttributes, Model model) {
-    
+	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
 		Administrator administrator = new Administrator();
+
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
 
-		// formのメールアドレスを代入
-		String mailAddress = administrator.getMailAddress();
-
-		if (result.hasErrors() && !(administratorService.findByMailAddress(mailAddress) == null)) {
-			// 入力ミスとメール重複があればエラー発生
-			result.rejectValue("mailAddress", null, "メールアドレスが重複しています。");
-			return toInsert();
-		} else if (result.hasErrors()) {
-			// 入力ミス等があればエラー発生
-			return toInsert();
-		} else if (!(administratorService.findByMailAddress(mailAddress) == null)) {
-			// メール重複があればエラー発生
-			result.rejectValue("mailAddress", null, "メールアドレスが重複しています。");
-			return toInsert();
-		} else {
-			administratorService.insert(administrator);
-			return "redirect:/redirect-insert";
+		// パスワード確認
+		if (!form.getPassword().equals(form.getConfirmationPassword())) {
+			result.rejectValue("password", "", "パスワードが一致していません");
+			result.rejectValue("confirmationPassword", "", "");
 		}
 
+		// メールアドレスが重複している場合の処理
+		Administrator existAdministrator = administratorService.findByMailAddress(form.getMailAddress());
+		if (existAdministrator != null) {
+			result.rejectValue("mailAddress", "", "そのメールアドレスは既に登録されています");
+		}
 
+		// エラーが一つでもあれば入力画面に戻る
+		if (result.hasErrors()) {
+			return toInsert();
+		}
+		return "redirect:/";
 	}
 
 	/**
