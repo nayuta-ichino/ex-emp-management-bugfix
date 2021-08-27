@@ -66,6 +66,8 @@ public class InsertAdministratorForm {
 	}
 
 	/**
+	 * <<<<<<< HEAD
+	 * 
 	 * @return the confirmationPassword
 	 */
 	public String getConfirmationPassword() {

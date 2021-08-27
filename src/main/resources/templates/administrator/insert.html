@@ -79,6 +79,21 @@
 									</div>
 								</div>
 							</div>
+							<!-- 再入力パスワード -->
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-12">
+										<label for="password">
+											パスワード[再入力]:
+										</label>
+										<label th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}" class="error-messages">
+											パスワードを入力してください
+										</label>
+										<input type="password" name="passwordCheck" id="password-check" class="form-control" placeholder="password-check"
+											 th:field="*{passwordCheck}" th:errorclass="error-input" value="xxxxxxxx">
+									</div>
+								</div>
+							</div>
 							<!-- 登録ボタン -->
 							<div class="form-group">
 								<div class="row">
