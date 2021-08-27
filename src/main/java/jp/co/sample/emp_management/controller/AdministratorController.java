@@ -75,17 +75,19 @@ public class AdministratorController {
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result,
 			RedirectAttributes redirectAttributes, Model model) {
-		
-		//もし１つでもエラーがあれば入力画面に遷移
-		if(result.hasErrors()) {
+
+    // もし１つでもエラーがあれば入力画面に遷移
+		if (result.hasErrors()) {
 			return "administrator/insert";
 		}
-		
+
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
 		administratorService.insert(administrator);
-		return "redirect:/redirect-insert";
+
+		return "redirect:/";
+
 	}
 
 	/**
@@ -121,9 +123,9 @@ public class AdministratorController {
 	@RequestMapping("/login")
 	public String login(LoginForm form, BindingResult result, Model model) {
 		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
-		
+
 		session.setAttribute("administrator", administrator);
-		
+
 		if (administrator == null) {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 			return toLogin();
