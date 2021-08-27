@@ -76,7 +76,7 @@ public class AdministratorController {
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result,
 			RedirectAttributes redirectAttributes, Model model) {
 
-		// もし１つでもエラーがあれば入力画面に遷移
+    // もし１つでもエラーがあれば入力画面に遷移
 		if (result.hasErrors()) {
 			return "administrator/insert";
 		}
@@ -85,8 +85,19 @@ public class AdministratorController {
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
 		administratorService.insert(administrator);
+
 		return "redirect:/";
-		//return toLogin();
+
+	}
+
+	/**
+	 * 管理者情報を登録(リダイレクト).
+	 * 
+	 * @return ログイン画面
+	 */
+	@RequestMapping("/redirect-insert")
+	public String redirectInsert() {
+		return "administrator/login";
 	}
 
 	/////////////////////////////////////////////////////
