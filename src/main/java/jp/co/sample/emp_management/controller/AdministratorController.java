@@ -79,21 +79,25 @@ public class AdministratorController {
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
 
-		// もし１つでもエラーがあれば入力画面に遷移
-		if (result.hasErrors()) {
-			return "administrator/insert";
-		}
-
 		// formのメールアドレスを代入
 		String mailAddress = administrator.getMailAddress();
 
-		if (!(administratorService.findByMailAddress(mailAddress) == null)) {
+		if (result.hasErrors() && !(administratorService.findByMailAddress(mailAddress) == null)) {
+			// 入力ミスとメール重複があればエラー発生
 			result.rejectValue("mailAddress", null, "メールアドレスが重複しています。");
 			return toInsert();
+		} else if (result.hasErrors()) {
+			// 入力ミス等があればエラー発生
+			return toInsert();
+		} else if (!(administratorService.findByMailAddress(mailAddress) == null)) {
+			// メール重複があればエラー発生
+			result.rejectValue("mailAddress", null, "メールアドレスが重複しています。");
+			return toInsert();
+		} else {
+			administratorService.insert(administrator);
+			return "redirect:/redirect-insert";
 		}
 
-		administratorService.insert(administrator);
-		return "redirect:/redirect-insert";
 	}
 
 	/**
