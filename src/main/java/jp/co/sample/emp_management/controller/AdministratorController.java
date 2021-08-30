@@ -101,6 +101,21 @@ public class AdministratorController {
 			return "redirect:/redirect-insert";
 		}
 
+		// もし１つでもエラーがあれば入力画面に遷移
+		if (result.hasErrors()) {
+			return "administrator/insert";
+		}
+
+		// パスワードと確認用パスワードと一致していなければ入力画面に遷移
+		if (!(form.getPassword().equals(form.getPasswordCheck()))) {
+			return toInsert();
+		} else {
+			Administrator administrator = new Administrator();
+			// フォームからドメインにプロパティ値をコピー
+			BeanUtils.copyProperties(form, administrator);
+			administratorService.insert(administrator);
+			return "redirect:/redirect-insert";
+		}
 
 	}
 
