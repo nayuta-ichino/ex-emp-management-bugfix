@@ -1,6 +1,7 @@
 package jp.co.sample.emp_management.form;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
@@ -66,7 +67,6 @@ public class InsertAdministratorForm {
 	}
 
 	/**
-	 * <<<<<<< HEAD
 	 * 
 	 * @return the confirmationPassword
 	 */
