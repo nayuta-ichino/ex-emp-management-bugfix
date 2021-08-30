@@ -20,10 +20,9 @@ public class InsertAdministratorForm {
 	/** パスワード */
 	@Size(min = 1, max = 127, message = "パスワードは1文字以上127文字以内で入力してください。")
 	private String password;
-	/** 再入力パスワード */
-	@NotBlank(message = "確認用パスワードが入力されていません。")
+	/** 確認用パスワード */
 	@Size(min = 1, max = 127, message = "パスワードは1文字以上127文字以内で入力してください。")
-	private String passwordCheck;
+	private String confirmationPassword;
 
 	/**
 	 * @return the name
@@ -68,24 +67,25 @@ public class InsertAdministratorForm {
 	}
 
 	/**
-	 * @param the passwordCheck
+	 * 
+	 * @return the confirmationPassword
 	 */
-	public String getPasswordCheck() {
-		return passwordCheck;
+	public String getConfirmationPassword() {
+		return confirmationPassword;
 	}
 
 	/**
-	 * @param passwordCheck the passwordCheck to set
+	 * @param confirmationPassword the confirmationPassword to set
 	 */
-	public void setPasswordCheck(String passwordCheck) {
-		this.passwordCheck = passwordCheck;
+	public void setConfirmationPassword(String confirmationPassword) {
+		this.confirmationPassword = confirmationPassword;
 	}
 
 	// toString
 	@Override
 	public String toString() {
 		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
-				+ ", passwordCheck=" + passwordCheck + "]";
+				+ ", confirmationPassword=" + confirmationPassword + "]";
 	}
 
 }
